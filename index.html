@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+   <link rel="icon" type="image/png" href="photos/favicon.png?v=2">
+</head>
+<body>
+  <div class="scroll-progress" id="scroll-progress"></div>
+  <div id="lock-screen">
+  <div class="lock-card">
+    <button class="lock-avatar" id="lock-avatar" aria-label="tap for a hint">
+      <img src="photos/pfp2.jpg" alt="">
+    </button>
+    <h1 class="lock-title">LOCKED</h1>
+    <p class="lock-hint">hint &mdash; tap the picture</p>
+    <p class="lock-hint-text" id="lock-hint-text"></p>
+    <div class="lock-dots" id="lock-dots"></div>
+    <div class="lock-keypad" id="lock-keypad"></div>
+    <p class="lock-error" id="lock-error"></p>
+  </div>
+</div>
+<!-------Opening cake------>
+<div id="page-loader" class="hidden">
+  <div class="loader-sparkles">
+    <span>✨</span><span>💛</span><span>✨</span><span>💫</span><span>✨</span>
+  </div>
+  <svg class="loader-cake" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+    <g class="flame">
+      <ellipse cx="100" cy="18" rx="7" ry="14" fill="#FFC857"/>
+      <ellipse cx="100" cy="22" rx="3.5" ry="7" fill="#FF6F9C"/>
+    </g>
+    <rect x="97" y="32" width="6" height="14" fill="#C79B3F"/>
+    <rect x="30" y="110" width="140" height="55" rx="6" fill="#FF6F9C"/>
+    <rect x="30" y="110" width="140" height="14" fill="#F6F1EA"/>
+    <rect x="45" y="70" width="110" height="45" rx="6" fill="#67E8B0"/>
+    <rect x="45" y="70" width="110" height="12" fill="#F6F1EA"/>
+    <circle cx="70" cy="105" r="4" fill="#FFC857"/>
+    <circle cx="100" cy="100" r="4" fill="#FF6F9C"/>
+    <circle cx="130" cy="105" r="4" fill="#FFC857"/>
+  </svg>
+  <p class="loader-text">wrapping up something sweet for mahh girlll<span class="loader-dot">.</span><span class="loader-dot">.</span><span class="loader-dot">.</span></p>
+</div>
+
+<canvas id="stars"></canvas>
+
+<div class="music-player music-player-right" id="music-player">
+  <button class="music-toggle" id="change-song-btn" aria-label="Change song">
+    <svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 10 V3 L11 1 V8" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="2" cy="10" r="2" fill="currentColor"/><circle cx="11" cy="8" r="2" fill="currentColor"/></svg>
+  </button>
+  <span class="music-label" id="current-song-label">pick a song</span>
+  <button class="pause-toggle" id="pause-toggle" aria-label="Play or pause">
+    <svg class="pause-icon-play" width="12" height="12" viewBox="0 0 14 14"><polygon points="2,1 13,7 2,13" fill="currentColor"/></svg>
+    <svg class="pause-icon-pause" width="12" height="12" viewBox="0 0 14 14" style="display:none;"><rect x="2" y="1" width="3" height="12" fill="currentColor"/><rect x="9" y="1" width="3" height="12" fill="currentColor"/></svg>
+  </button>
+  <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="25" aria-label="Volume">
+</div>
+<audio id="bg-audio" loop preload="none"></audio>
+
+<div class="song-choice-overlay" id="song-choice-overlay">
+  <div class="song-choice-card">
+    <p class="eyebrow-tag">pick the vibe</p>
+    <h2>which song do you want?</h2>
+    <div class="song-choice-buttons" id="song-choice-buttons"></div>
+    <h2 class="song-divider">or pick one of your favorites</h2>
+    <div class="song-choice-buttons" id="song-choice-buttons-more"></div>
+   <div class="song-choice-footer">
+      <button class="btn-ghost" id="choose-song-skip">American Wedding</button>
+      <button class="btn-ghost" id="choose-song-none">No Music, Thanks</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GATE ============ -->
+<section class="station" id="gate">
+  <div>
+    <p class="eyebrow-tag">a little something for my Nawara</p>
+    <h1>Happy Birthday<span class="signature" data-name-slot>[Her Name]</span></h1>
+  </div>
+
+  <div class="balloon-field" id="balloon-field"></div>
+
+  <p class="lead">pop a few, then come inside &mdash; I made you something</p>
+  <button class="btn-primary" id="enter-btn" disabled>pop 3 balloons first</button>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#FFC857" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ CAKE ============ -->
+<section class="station" id="cake-station">
+  <p class="eyebrow-tag">step one</p>
+  <h2>make a wish</h2>
+  <div class="cake-wrap" id="cake-wrap">
+    <svg class="cake-svg" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+      <g class="flame" id="flame">
+        <ellipse cx="100" cy="18" rx="7" ry="14" fill="#FFC857"/>
+        <ellipse cx="100" cy="22" rx="3.5" ry="7" fill="#FF6F9C"/>
+      </g>
+      <rect x="97" y="32" width="6" height="14" fill="#C79B3F"/>
+      <rect x="30" y="110" width="140" height="55" rx="6" fill="#FF6F9C"/>
+      <rect x="30" y="110" width="140" height="14" fill="#F6F1EA"/>
+      <rect x="45" y="70" width="110" height="45" rx="6" fill="#67E8B0"/>
+      <rect x="45" y="70" width="110" height="12" fill="#F6F1EA"/>
+      <circle cx="70" cy="105" r="4" fill="#FFC857"/>
+      <circle cx="100" cy="100" r="4" fill="#FF6F9C"/>
+      <circle cx="130" cy="105" r="4" fill="#FFC857"/>
+    </svg>
+  </div>
+  <p class="cake-hint" id="cake-hint">tap the flame to blow out the candle</p>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 30 Q 50 -10 100 20 T 200 30" stroke="#FF6F9C" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ DO YOU LOVE ME ============ -->
+<section class="station" id="dylm-station">
+  <p class="eyebrow-tag">quick question</p>
+  <div id="dylm-card">
+    <div class="dylm-face" id="dylm-face">🥺</div>
+    <h2 id="dylm-question">do you love me?</h2>
+    <div class="dylm-buttons">
+      <button class="btn-primary" id="dylm-yes">yes</button>
+      <button class="btn-ghost" id="dylm-no">no</button>
+    </div>
+  </div>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#67E8B0" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ REASONS JAR ============ -->
+<section class="station" id="jar-station">
+  <p class="eyebrow-tag">step two</p>
+  <h2>a jar of reasons</h2>
+  <p class="lead">I filled it with reasons I'm into you. Pull one out.</p>
+  <div class="jar-wrap">
+    <svg class="jar-svg" id="jar-svg" viewBox="0 0 140 170" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="10" width="80" height="18" rx="4" fill="#C79B3F"/>
+      <path d="M20 30 h100 v110 a20 20 0 0 1 -20 20 h-60 a20 20 0 0 1 -20 -20 z" fill="rgba(255,200,87,0.14)" stroke="#FFC857" stroke-width="2"/>
+      <circle cx="50" cy="90" r="5" fill="#FF6F9C"/>
+      <circle cx="75" cy="110" r="5" fill="#67E8B0"/>
+      <circle cx="95" cy="80" r="5" fill="#FFC857"/>
+      <circle cx="60" cy="130" r="5" fill="#FFC857"/>
+      <circle cx="85" cy="130" r="5" fill="#FF6F9C"/>
+    </svg>
+    <div id="jar-reason">tap the jar to draw a reason</div>
+    <p class="jar-count" id="jar-count"></p>
+  </div>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 30 Q 50 -10 100 20 T 200 30" stroke="#FFC857" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ QUIZ ============ -->
+<section class="station" id="quiz-station">
+  <p class="eyebrow-tag">step three</p>
+  <h2>how well do we know each other?</h2>
+  <div class="quiz-card" id="quiz-card"></div>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#FF6F9C" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ PHOTOS ============ -->
+<section class="station" id="photos-station">
+  <p class="eyebrow-tag">step four</p>
+  <h2>a small gallery of you</h2>
+  <div class="photo-strip" id="photo-strip"></div>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 30 Q 50 -10 100 20 T 200 30" stroke="#67E8B0" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ VOICE MESSAGE ============ -->
+<section class="station" id="voice-station">
+  <p class="eyebrow-tag">only if you want to</p>
+  <h2>record something for me</h2>
+  <p class="lead">sing, talk, whatever &mdash; totally optional, no pressure</p>
+  <button class="btn-primary" id="record-btn">start recording</button>
+  <p class="cake-hint" id="record-status"></p>
+  <audio id="voice-preview" controls style="display:none; width:100%; max-width:340px;"></audio>
+  <button class="btn-ghost" id="voice-share-btn" style="display:none;">send via WhatsApp</button>
+  <a id="voice-download-link" class="btn-ghost" style="display:none;" download="voice-message.webm">download instead</a>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#FFC857" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ LETTER ============ -->
+<section class="station" id="letter-station">
+  <p class="eyebrow-tag">step five</p>
+  <h2>a letter, under the surface</h2>
+  <p class="lead">scratch it away with your cursor or finger</p>
+  <div class="letter-frame">
+    <div class="letter-text" id="letter-text"></div>
+    <canvas id="scratch-canvas"></canvas>
+  </div>
+  <p class="scratch-hint">tip: it's easier with a slow drag than a click</p>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#FFC857" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ COUPONS ============ -->
+<section class="station" id="coupon-station">
+  <p class="eyebrow-tag">the actual gift</p>
+  <h2>things I can actually give you</h2>
+  <p class="lead">I couldn't buy much this year, so here's what I can give instead. Tap through.</p>
+  <div class="coupon-deck" id="coupon-deck"></div>
+  <button class="btn-ghost" id="coupon-next">next one</button>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 30 Q 50 -10 100 20 T 200 30" stroke="#FF6F9C" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ QUIET DAYS ============ -->
+<section class="station" id="receipts-station">
+  <p class="eyebrow-tag">for the quiet stretches</p>
+  <h2>some days are just quieter than others</h2>
+  <p class="lead">that's okay. I'm still here either way.</p>
+  <div class="note-box" id="receipt-joke">no matter how quiet it gets, this doesn't change.</div>
+  <button class="btn-ghost" id="receipt-next">one more</button>
+</section>
+
+<!-- ============ BUILD THE DATE ============ -->
+<section class="station" id="date-station">
+  <p class="eyebrow-tag">one more thing</p>
+  <h2>build our perfect day</h2>
+  <p class="lead">drag these into whatever order sounds best to you</p>
+  <div class="date-cards" id="date-cards"></div>
+  <button class="btn-ghost" id="date-lock-btn">lock it in</button>
+  <p class="jar-count" id="date-result"></p>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#67E8B0" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ FUTURE QUESTION ============ -->
+<section class="station" id="future-station">
+  <p class="eyebrow-tag">one for you</p>
+  <h2 id="future-question">how do you see us, down the line?</h2>
+  <p class="lead">no wrong answer. type whatever comes to mind &mdash; I'll actually read this.</p>
+  <textarea id="future-input" class="future-textarea" placeholder="type here&hellip;" rows="4"></textarea>
+  <p class="future-error" id="future-error"></p>
+  <button class="btn-primary" id="future-submit">send it to me</button>
+  <div class="future-response" id="future-response"></div>
+</section>
+
+<div class="trail">
+  <svg width="200" height="60" viewBox="0 0 200 60" fill="none"><path d="M0 10 Q 50 60 100 30 T 200 10" stroke="#67E8B0" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+</div>
+
+<!-- ============ DAILY NOTE (PHP bonus, degrades gracefully) ============ -->
+<section class="station" id="note-station">
+  <p class="eyebrow-tag">no self control</p>
+  <h2>why I'm texting you again so soon</h2>
+  <div class="note-box" id="note-box">tap for an excuse</div>
+  <button class="btn-ghost" id="note-next">another excuse</button>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="station">
+  <p class="eyebrow-tag">happy birthday</p>
+  <h2 data-name-slot-2>[Her Name]</h2>
+  <p class="lead">thank you for the last few months. here's to a lot more.</p>
+  <p class="made-with">made with too much love and not enough money, by <span data-yourname-slot>[Your Name]</span> <button class="honest-dot" id="honest-dot" aria-label="one more thing">&middot;</button></p>
+  <p class="honest-note" id="honest-note"></p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
