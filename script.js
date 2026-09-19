@@ -303,10 +303,10 @@
     { label: "Min Shaf Habibi", src: "music/Min Shaf Habibi.mp3" }
   ],
   moreSongs: [
-    { label: "Wa Habibi", src: "music/wa habibi.mp3"},
-    { label: "What You Heard", src: "music/what you heard.mp3"},
-    { label: "Transform", src: "music/Transform.mp3"},
-    { label: "Awel Kol Haga", src: "music/awel kol haga.mp3"}
+      { label: "Wa Habibi", src: "music/wa habibi.mp3"},
+      { label: "What You Heard", src: "music/what you heard.mp3"},
+      { label: "Transform", src: "music/Transform.mp3"},
+      { label: "Awel Kol Haga", src: "music/awel kol haga.mp3"}
   ],
 
     // Optional PHP+MySQL feature — see backend/README for setup.
